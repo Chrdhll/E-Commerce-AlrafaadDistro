@@ -20,8 +20,16 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__ . '/auth.php';
 
-Route::middleware([IsAdmin::class])->group(function () {
+// Dashboard Customer (Setelah Login)
+Route::middleware(['auth', 'role:customer'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard.index');
+    });
+});
+
+// Dashboard Admin
+Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin', function () {
-        return view('dashboard');
+        return view('admin.dashboard');
     });
 });
